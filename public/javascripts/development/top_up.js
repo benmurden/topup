@@ -563,14 +563,15 @@ TopUp = (function() {
         break;
     }
     
+    // 2010-03-02 Ben Murden - switched things around here so swf files are not treated like flvs. They deserve better. Fixes JWplayer showing up in IE when using type=flash.
     switch(type) {
-      case "flash": case "flashvideo":
-        params.allowfullscreen = "true";
       case "flashvideo":
         params.flashvars = "file=" + src + "&autostart=true";
         src              = TopUp.host + TopUp.players_path + "flvplayer.swf";
         params.src       = src;
         params.movie     = src;
+      case "flash": case "flashvideo":  // Without this, IE uses the player above. Other browsers exit the function further up.
+        params.allowfullscreen = "true";
         break;
     }
     
